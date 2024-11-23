@@ -52,6 +52,20 @@ class SpotifyHelper {
         return $result;
     }
 
+    public static function getSpotifyAlbum($access_token, $album_id) {
+        $endpoint = env('SPOTIFY_URL') . env('SPOTIFY_ALBUM_ENDPOINT') . $album_id;
+        $result = self::consumeSpotifyApi($endpoint, $access_token);
+
+        return $result;
+    }
+
+    public static function getSpotifyArtist($access_token, $artist_id) {
+        $endpoint = env('SPOTIFY_URL') . env('SPOTIFY_ARTISTS_ENDPOINT') . $artist_id;
+        $result = self::consumeSpotifyApi($endpoint, $access_token);
+
+        return $result;
+    }
+
     private static function consumeSpotifyApi($endpoint, $access_token) {
         $curl = curl_init();
 
