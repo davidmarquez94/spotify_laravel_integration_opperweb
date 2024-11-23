@@ -38,4 +38,56 @@ class SpotifyController extends Controller
             ], 500);
         }
     }
+
+    public function retrieveAlbum(Request $request) {
+        //Valida campos de request
+        $valid = ValidationHelper::validateAlbumId($request->all());
+        if(!$valid['success']) {
+            return response()->json([
+                'success' => $valid['success'],
+                'errors' => $valid['errors']
+            ], 400);
+        }
+
+        try {
+            $token = SpotifyHelper::getSpotifyToken();
+            $result = SpotifyHelper::getSpotifyAlbum($token->access_token, $request->album_id);
+            return response()->json([
+                'success' => true,
+                'data' => $result
+            ], 200);
+        } catch(Exception $e) {
+            //Respuesta de error 500
+            return response()->json([
+                'success' => false,
+                'errors' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function retrieveArtist(Request $request) {
+        //Validación de campos
+        $valid = ValidationHelper::validateArtistId($request->all());
+        if(!$valid['success']) {
+            return response()->json([
+                'success' => $valid['success'],
+                'errors' => $valid['errors']
+            ], 400);
+        }
+
+        try {
+            $token = SpotifyHelper::getSpotifyToken();
+            $result = SpotifyHelper::getSpotifyArtist($token->access_token, $request->artist_id);
+            return response()->json([
+                'success' => true,
+                'data' => $result
+            ], 200);
+        } catch(Exception $e) {
+            //Respuesta de error 500
+            return response()->json([
+                'success' => false,
+                'errors' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -22,3 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('getLastestReleases', [
     SpotifyController::class, 'getLastestReleases'
 ]);
+
+Route::post('retrieveAlbum', [
+    SpotifyController::class, 'retrieveAlbum'
+]);
+
+Route::post('retrieveArtist', [
+    SpotifyController::class, 'retrieveArtist'
+]);
